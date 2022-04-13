@@ -69,6 +69,7 @@ left join wkda_retail.country_of_origin_retail as oc on oc.stock_number=ra.stock
 left join wkda_dm_retail_logistics.car_details as cd on cd.id = cl.id
 left join wkda_retail_refurbishment.refurbishment as r on r.retail_ad_id = ra.id
 left join wkda_dm_retail_logistics.branches as b2 on b2.id = r.branch_id
+left join wkda_dm_retail_logistics.refurbishment as r2 on r2.retail_ad_id = ra.id and r2.created_on > r.created_on
 
 left join wkda_retail.retail_order as ro on ro.stock_number=ra.stock_number
 and ro.state not in ('CANCELED', 'CANCELLED')
@@ -89,6 +90,7 @@ left join ba_kr_retail_clm as bro on bro.stock_number = ra.stock_number
 
 where 1
 and (ra.is_test = 'false' or ra.is_test is null)
+and r2.id is null
 and ra.retail_country = 'FR'
 and ra.first_purchased_on is not null
 and ra.first_purchased_on >= '2021-01-01'
