@@ -55,6 +55,7 @@ vehicle, 'gearType') = 1138 then 'Manual'
 ,b.country                                                                                                                                 as sourcing_country
 ,b2.name                                                                                                                                   as workshop_name  
 ,pbl.comment as last_active_blocker_comment
+,datediff(day, '1899-12-30', pbl.updated_on) as last_active_blocker_updated_on
 
 from wkda_retail_ad.retail_ad as ra
 left join price_online as po on po.stock_number = ra.stock_number
@@ -73,6 +74,7 @@ left join wkda_dm_retail_logistics.branches as b2 on b2.id = r.branch_id
 left join wkda_dm_retail_logistics.refurbishment as r2 on r2.retail_ad_id = ra.id and r2.created_on > r.created_on
 left join wkda_retail_publishing_blocker.publishing_blocker as pbl on pbl.retail_ad_id = ra.id and pbl.status = 'ACTIVE'
 left join wkda_retail_publishing_blocker.publishing_blocker as pbl2 on pbl2.retail_ad_id = pbl.retail_ad_id and pbl2.created_on > pbl.created_on
+
 
 left join wkda_retail.retail_order as ro on ro.stock_number=ra.stock_number
 and ro.state not in ('CANCELED', 'CANCELLED')
@@ -97,4 +99,4 @@ and r2.id is null
 and ra.retail_country = 'FR'
 and ra.first_purchased_on is not null
 and ra.first_purchased_on >= '2021-01-01'
-group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26
+group by 1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,27
