@@ -1,3 +1,5 @@
+-- https://dash.prod.bi.auto1.team/queries/58377
+
 -- query pour connaitre la marge prévue
 -- Cost_gate = ctm_net_inv * 0,60
 
